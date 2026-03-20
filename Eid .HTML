@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak | Md Waliullah</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Hind+Siliguri:wght@300;500;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-green: #062e1e;
+            --gold-gradient: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            --glass: rgba(255, 255, 255, 0.08);
+            --gold: #d4af37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #0a3d2e 0%, #051c12 100%);
+            font-family: 'Hind Siliguri', sans-serif;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #star-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+
+        #overlay {
+            position: fixed; inset: 0;
+            background: var(--primary-green);
+            z-index: 1000;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: opacity 1s ease;
+        }
+
+        .enter-btn {
+            padding: 15px 40px; font-size: 1.1rem;
+            background: var(--gold-gradient);
+            border: none; border-radius: 50px;
+            cursor: pointer; font-weight: bold; color: #222;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            transition: 0.3s;
+        }
+
+        .eid-card {
+            position: relative; z-index: 10;
+            width: 90%; max-width: 480px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 30px;
+            padding: 40px 25px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: float 6s ease-in-out infinite;
+            visibility: hidden; opacity: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .moon-icon {
+            width: 85px; height: 85px;
+            margin-bottom: 15px; border-radius: 50%;
+            border: 2px solid var(--gold); padding: 5px;
+        }
+
+        .arabic-text {
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem; color: var(--gold);
+        }
+
+        .english-title {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 3rem;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700; margin-bottom: 5px;
+        }
+
+        /* আপনার নাম - মিডল পজিশন */
+        .mid-sender {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 1.2rem;
+            color: #fcf6ba;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .verse-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px; border-radius: 12px;
+            border-left: 3px solid var(--gold);
+            margin: 20px 0; font-size: 0.85rem;
+        }
+
+        .verse-box .arabic {
+            font-family: 'Amiri', serif; display: block;
+            font-size: 1rem; color: var(--gold); margin-bottom: 5px;
+        }
+
+        .dua-trigger {
+            background: transparent; border: 1px solid var(--gold);
+            color: var(--gold); padding: 8px 25px;
+            border-radius: 20px; cursor: pointer; transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .dua-trigger:hover { background: var(--gold); color: #000; }
+
+        .modal {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none; justify-content: center; align-items: center;
+            z-index: 2000; backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: var(--primary-green); padding: 30px;
+            border-radius: 20px; border: 1px solid var(--gold);
+            max-width: 380px; width: 85%; text-align: center;
+            transform: scale(0.7); transition: 0.3s;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <canvas id="star-canvas"></canvas>
+
+    <div id="overlay">
+        <button class="enter-btn" onclick="startApp()">শুভেচ্ছা গ্রহণ করুন</button>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="https://l.top4top.io/m_3730u2qm54.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="eid-card" id="mainCard">
+        <img src="https://i.ibb.co.com/Z1NFPQGR/IMG-20250601-230322.png" alt="Eid Moon" class="moon-icon">
+
+        <div class="arabic-text">تقبل الله منا ومنكم</div>
+        <h1 class="english-title">Eid Mubarak</h1>
+        
+        <div class="mid-sender">By Md Waliullah</div>
+
+        <div class="verse-box">
+            <span class="arabic">"وَلِتُكْمِلُوا الْعِدَّةَ وَلِتُكَبِّرُوا اللَّهَ عَلَىٰ مَا هَدَاكُمْ"</span>
+            <p>"যাতে তোমরা সংখ্যা পূর্ণ কর এবং তোমাদের প্রদর্শিত হেদায়েতের জন্য আল্লাহর মহিমা ঘোষণা কর।"</p>
+        </div>
+
+        <p style="margin-bottom: 20px; font-weight: 300;">ঈদুল ফিতরের এই আনন্দঘন মুহূর্তে আপনার জীবন ভরে উঠুক অনাবিল শান্তিতে।</p>
+
+        <button class="dua-trigger" onclick="toggleModal(true)">বিশেষ দু'আ</button>
+    </div>
+
+    <div class="modal" id="duaModal">
+        <div class="modal-content" id="modalContent">
+            <span style="position:absolute; top:10px; right:15px; cursor:pointer; color:var(--gold);" onclick="toggleModal(false)">&times;</span>
+            <h3 style="color:var(--gold); margin-bottom:15px;">আমিন</h3>
+            <p>হে আল্লাহ! আমাদের সকল ইবাদত কবুল করুন এবং আমাদের পরবর্তী ঈদ পর্যন্ত সুস্থ রাখুন। <br><br><b>— Md Waliullah</b></p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('star-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5;
+                this.opacity = Math.random();
+                this.speed = Math.random() * 0.015;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 246, 186, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            update() {
+                this.opacity += this.speed;
+                if (this.opacity > 1 || this.opacity < 0) this.speed *= -1;
+            }
+        }
+
+        for (let i = 0; i < 150; i++) stars.push(new Star());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(s => { s.update(); s.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        function startApp() {
+            document.getElementById('bg-music').play().catch(() => {});
+            const overlay = document.getElementById('overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                const card = document.getElementById('mainCard');
+                card.style.visibility = 'visible';
+                card.style.opacity = '1';
+                card.style.transition = 'opacity 1.2s ease, transform 1s ease';
+            }, 1000);
+        }
+
+        function toggleModal(show) {
+            const modal = document.getElementById('duaModal');
+            const content = document.getElementById('modalContent');
+            if (show) {
+                modal.style.display = 'flex';
+                setTimeout(() => { content.style.transform = 'scale(1)'; }, 10);
+            } else {
+                content.style.transform = 'scale(0.7)';
+                setTimeout(() => { modal.style.display = 'none'; }, 300);
+            }
+        }
+    </script>
+</body>
+</html>
